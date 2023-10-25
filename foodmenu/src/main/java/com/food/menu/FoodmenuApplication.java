@@ -21,7 +21,7 @@ public class FoodmenuApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("러닝러닝 런런");
-		FoodMenu foodMenu = new FoodMenu();
+//		FoodMenu foodMenu = new FoodMenu();
 //		foodMenu.setFname("라면");
 //		foodMenu.setFtype("분식");
 //		foodMenu.setFprice("5000");
