@@ -16,7 +16,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "_comment" : "window 에서는 set mac 에서는 export PORT=9001",
+    "start": "export PORT=9001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
