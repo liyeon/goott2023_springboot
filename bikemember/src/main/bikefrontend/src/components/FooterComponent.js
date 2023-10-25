@@ -3,7 +3,7 @@ import React from 'react';
 const FooterComponent = (props) => {
     return (
         <div>
-            <footer className='bg-warning py-3'>
+            <footer className='bg-warning py-3 text-center fixed-bottom'>
                 <span className='text-center text-light'>
                     All Rights Reserved 200 master@google.com
                 </span>

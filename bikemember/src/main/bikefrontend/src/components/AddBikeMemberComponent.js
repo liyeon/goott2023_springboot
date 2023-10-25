@@ -1,32 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BikeMemberService from "../servers/BikeMemberService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const AddBikeMemberComponent = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
+
   const navigate = useNavigate();
 
-  const saveBikeMember = (e) => {
+  const { id } = useParams();
+
+  // const saveBikeMember = (e) => {
+  //   e.preventDefault();
+  //   const bikemember = { firstName, lastName, emailId };
+  //   // console.log(bikemember)
+  //   BikeMemberService.createBikeMember(bikemember)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       // 다시 리스트로 돌아가기
+  //       navigate('/bikemembers')
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  const saveOrUpdateBikeMember = (e) => {
     e.preventDefault();
     const bikemember = { firstName, lastName, emailId };
     // console.log(bikemember)
-    BikeMemberService.createBikeMember(bikemember)
+    if (id) {
+      BikeMemberService.updateBikeMember(id, bikemember)
+        .then((response) => {
+          console.log(response.data);
+          navigate("/bikemembers");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      BikeMemberService.createBikeMember(bikemember)
+        .then((response) => {
+          console.log(response.data);
+          navigate("/bikemembers");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  useEffect(() => {
+    BikeMemberService.getBikeMemberById(id)
       .then((response) => {
-        console.log(response.data);
-        // 다시 리스트로 돌아가기
-        navigate('/bikemembers')
+        setFirstName(response.data.firstName);
+        setLastName(response.data.lastName);
+        setEmailId(response.data.emailId);
       })
       .catch((error) => {
         console.log(error);
       });
+  }, [id]);
+
+  const title = () => {
+    if (id) {
+      return <h2 className="text-center">Edit BikeMember</h2>;
+    } else {
+      return <h2 className="text-center">Add BikeMember</h2>;
+    }
   };
+
+  const btn = () => {
+    if (id) {
+      return "수정하기";
+    } else {
+      return "등록하기";
+    }
+  };
+
   return (
     <div className="container py-4">
       <div className="row">
         <div className="card col-md-6 offset-md-3 py-3">
-          <h2 className="text-center">Add BikeMember</h2>
+          {title()}
+          {/* <h2 className="text-center">Add BikeMember</h2> */}
           <div className="card-body">
             <form>
               <div className="form-group mb-2">
@@ -65,10 +121,13 @@ const AddBikeMemberComponent = (props) => {
               </div>
               <button
                 className="btn btn-success"
-                onClick={(e) => saveBikeMember(e)}
+                onClick={(e) => saveOrUpdateBikeMember(e)}
               >
-                등록하기
+                {btn()}
               </button>
+              <Link to="/bikemembers" className="btn btn-secondary mx-2">
+                목록으로
+              </Link>
             </form>
           </div>
         </div>

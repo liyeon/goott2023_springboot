@@ -14,6 +14,7 @@ function App() {
           <Route path='/' element={<ListBikeMemberComponent/>}></Route>
           <Route path='/bikemembers' element={<ListBikeMemberComponent/>}></Route>
           <Route path='/add-bikemember' element={<AddBikeMemberComponent/>}></Route>
+          <Route path='/edit-bikemember/:id' element={<AddBikeMemberComponent/>}></Route>
         </Routes>
       </div>
       <FooterComponent/>
