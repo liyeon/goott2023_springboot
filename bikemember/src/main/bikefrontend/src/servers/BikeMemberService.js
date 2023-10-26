@@ -30,5 +30,9 @@ class BikeMemberService {
       BIKEMEMBER_BASE_REST_API_URL + "/" + bikememberId
     );
   }
+
+  loginBikeMember(bikememberId){
+    return axios.get(BIKEMEMBER_BASE_REST_API_URL+"/"+bikememberId);
+  }
 }
 export default new BikeMemberService();

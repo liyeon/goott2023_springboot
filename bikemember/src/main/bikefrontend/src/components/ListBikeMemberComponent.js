@@ -48,6 +48,9 @@ const ListBikeMemberComponent = () => {
                             Email ID
                         </th>
                         <th>
+                            Password
+                        </th>
+                        <th>
                             수정/삭제
                         </th>
                     </tr>
@@ -61,6 +64,7 @@ const ListBikeMemberComponent = () => {
                                 <td>{bikemember.firstName}</td>
                                 <td>{bikemember.lastName}</td>
                                 <td>{bikemember.emailId}</td>
+                                <td>{bikemember.password}</td>
                                 <td>
                                     <Link 
                                         className='btn btn-light'

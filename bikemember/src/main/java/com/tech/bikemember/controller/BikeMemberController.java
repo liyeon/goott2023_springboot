@@ -54,7 +54,7 @@ public class BikeMemberController {
         updateBikeMember.setFirstName(bikeMember.getFirstName());
         updateBikeMember.setLastName(bikeMember.getLastName());
         updateBikeMember.setEmailId(bikeMember.getEmailId());
-
+        updateBikeMember.setPassword(bikeMember.getPassword());
         bikeMemberRepository.save(updateBikeMember);
         return ResponseEntity.ok(updateBikeMember);
     }

@@ -6,6 +6,7 @@ const AddBikeMemberComponent = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
+  const [password,setPassword]=useState("");
 
   const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ const AddBikeMemberComponent = (props) => {
   // };
   const saveOrUpdateBikeMember = (e) => {
     e.preventDefault();
-    const bikemember = { firstName, lastName, emailId };
+    const bikemember = { firstName, lastName, emailId, password };
     // console.log(bikemember)
     if (id) {
       BikeMemberService.updateBikeMember(id, bikemember)
@@ -55,6 +56,7 @@ const AddBikeMemberComponent = (props) => {
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
         setEmailId(response.data.emailId);
+        setPassword(response.data.password);
       })
       .catch((error) => {
         console.log(error);
@@ -117,6 +119,17 @@ const AddBikeMemberComponent = (props) => {
                   value={emailId}
                   className="form-control"
                   onChange={(e) => setEmailId(e.target.value)}
+                />
+              </div>
+              <div className="form-group mb-2">
+                <label className="form-label">Password</label>
+                <input
+                  type="text"
+                  placeholder="Enter Password"
+                  name="password"
+                  value={password}
+                  className="form-control"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <button
