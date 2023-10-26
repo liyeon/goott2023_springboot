@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import FoodMenuService from "../servers/FoodMenuService";
 const InsertComponent = (props) => {
   const [fname, setFname] = useState("");
@@ -7,11 +7,28 @@ const InsertComponent = (props) => {
   const [fprice, setFprice] = useState("");
   const navigate = useNavigate();
 
-  const saveFoodMenu = (e) => {
+  const { id } = useParams();
+
+  // const saveFoodMenu = (e) => {
+  //   e.preventDefault();
+  //   const foodmenu = { fname, ftype, fprice };
+
+  //   FoodMenuService.createFoodMenu(foodmenu)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       navigate("/");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  const saveOrUpdateFoodMenu = (e) => {
     e.preventDefault();
     const foodmenu = { fname, ftype, fprice };
 
-    FoodMenuService.createFoodMenu(foodmenu)
+    if(id){
+      FoodMenuService.updateFoodMenu(id,foodmenu)
       .then((response) => {
         console.log(response.data);
         navigate("/");
@@ -19,12 +36,47 @@ const InsertComponent = (props) => {
       .catch((error) => {
         console.log(error);
       });
+    }else{
+      FoodMenuService.createFoodMenu(foodmenu)
+      .then((response) => {
+        console.log(response.data);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+  useEffect(()=>{
+    FoodMenuService.getFoodMenuById(id).then((response)=>{
+      setFname(response.data.fname);
+      setFtype(response.data.ftype);
+      setFprice(response.data.fprice);
+    }).catch((error)=>{
+      console.log(error);
+    });
+  },[id]);
+
+  const title = () => {
+    if (id) {
+      return <h2 className="text-center">메뉴 수정하기!</h2>;
+    } else {
+      return <h2 className="text-center">메뉴 등록하기!</h2>;
+    }
+  };
+
+  const btn = () => {
+    if (id) {
+      return "수정하기";
+    } else {
+      return "등록하기";
+    }
   };
   return (
     <main className="container py-5">
       <div className="row">
         <div className="card col-md-6 offset-md-3 py-3">
-          <h2 className="text-center">메뉴 등록하기!</h2>
+          {title()}
           <div className="card-body">
             <form>
               <div className="form-group mb-2">
@@ -60,10 +112,12 @@ const InsertComponent = (props) => {
                   onChange={(e) => setFprice(e.target.value)}
                 />
               </div>
-              <button 
+              <button
                 className="btn btn-success btn-sm"
-                onClick={(e)=> saveFoodMenu(e)}
-                >메뉴 등록하기!</button>
+                onClick={(e) => saveOrUpdateFoodMenu(e)}
+              >
+                {btn()}
+              </button>
             </form>
           </div>
         </div>

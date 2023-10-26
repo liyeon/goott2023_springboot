@@ -13,6 +13,7 @@ function App() {
           <Routes>
             <Route path='/' element={<ListComponent/>}></Route>
             <Route path='/insert' element={<InsertComponent/>}></Route>
+            <Route path='/update/:id' element={<InsertComponent/>}></Route>
           </Routes>    
         <Footer/>
       </Router>
